@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream and Capture</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- <style>
+        /* Custom CSS styles */
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        #captureButton,
+        #recaptureButton,
+        #backendDataButton {
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+            outline: none;
+        }
+
+        #captureButton:hover,
+        #recaptureButton:hover,
+        #backendDataButton:hover {
+            transform: translateY(-2px);
+        }
+
+        #captureButton,
+        #recaptureButton,
+        #backendDataButton {
+            cursor: pointer;
+        }
+
+        #videoElement {
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hide the retake and backend buttons initially */
+        #recaptureButton,
+        #backendDataButton {
+            display: none;
+        }
+    </style> -->
+    <style>
+        /* Custom CSS styles */
+        /* .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        } */
+    
+        #captureButton,
+        #recaptureButton,
+        #backendDataButton {
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+            outline: none;
+        }
+    
+        #captureButton:hover,
+        #recaptureButton:hover,
+        #backendDataButton:hover {
+            transform: translateY(-2px);
+        }
+    
+        #captureButton,
+        #recaptureButton,
+        #backendDataButton {
+            cursor: pointer;
+        }
+    
+        #videoElement {
+            /* border-radius: 20px; */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            height: 70vh; /* Set height to 100% of viewport height */
+            object-fit: cover; /* Maintain aspect ratio and fill container */
+        }
+    
+        /* Hide the retake and backend buttons initially */
+        #recaptureButton,
+        #backendDataButton {
+            display: none;
+        }
+    </style>
+    
+</head>
+<body class="bg-cover bg-center bg-gradient-to-r from-purple-400 to-blue-500 min-h-screen flex items-center justify-center">
+<div class="container mx-auto py-8 max-w-lg">
+    <div class="flex justify-center">
+        <video id="videoElement" autoplay class="w-full max-w-md"></video>
+    </div>
+    <div class="flex flex-col md:flex-row justify-center mt-4 space-x-4 space-y-4">
+        <button id="captureButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg">
+            Capture Photo
+        </button>
+        <button id="recaptureButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg">
+            Retake Photo
+        </button>
+        <button id="backendDataButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg">
+            View Backend Data
+        </button>
+    </div>
+</div>
+<script>
+    const video = document.getElementById("videoElement");
+    const captureButton = document.getElementById("captureButton");
+    const recaptureButton = document.getElementById("recaptureButton");
+    const backendDataButton = document.getElementById("backendDataButton");
+
+    // Get user media
+    navigator.mediaDevices.getUserMedia({video: true})
+        .then((stream) => {
+            video.srcObject = stream;
+        })
+        .catch((err) => {
+            console.error("Error accessing webcam:", err);
+        });
+
+    // Capture button click event
+    captureButton.addEventListener("click", () => {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Hide the video element
+        video.style.display = "none";
+
+        // Show captured image in place of the video element
+        const capturedImage = new Image();
+        capturedImage.src = canvas.toDataURL("image/png");
+        capturedImage.classList.add("w-full", "max-w-md", "rounded-lg", "shadow-md"); // Apply Tailwind CSS classes for styling
+        video.parentNode.insertBefore(capturedImage, video); // Insert before the video element
+
+        // Toggle button visibility
+        captureButton.style.display = "none";
+        recaptureButton.style.display = "inline-block";
+        backendDataButton.style.display = "inline-block";
+    });
+
+    // Recapture button click event
+    recaptureButton.addEventListener("click", () => {
+        // Remove the captured image
+        const capturedImage = document.querySelector("img");
+        if (capturedImage) {
+            capturedImage.remove();
+        }
+
+        // Show the video element again
+        video.style.display = "block";
+
+        // Toggle button visibility
+        captureButton.style.display = "inline-block";
+        recaptureButton.style.display = "none";
+        backendDataButton.style.display = "none";
+    });
+
+    // Backend data button click event
+    backendDataButton.addEventListener("click", () => {
+        // Fetch data from backend
+        fetch("YOUR_BACKEND_API_URL")
+            .then((response) => response.json())
+            .then((data) => {
+                // Display data on button
+                backendDataButton.textContent = data.name;
+            })
+            .catch((err) => {
+                console.error("Error fetching backend data:", err);
+            });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Company Dashboard</title>
+    <!-- Include Tailwind CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Glass morphism effect */
+      .glass {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      }
+
+      /* Gradient background */
+      .gradient-bg {
+        background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- Company Dashboard -->
+    <div class="flex flex-col lg:flex-row h-screen">
+      <!-- Sidebar -->
+      <div
+        class="w-full lg:w-64 px-8 py-4 bg-gradient-to-b from-blue-500 to-purple-500 text-white"
+      >
+        <h1 class="text-2xl font-semibold mb-4">Company Dashboard</h1>
+        <ul>
+          <li class="mb-4">
+            <a href="add_employee.html" class="block hover:text-gray-200"
+              >Add Employee</a
+            >
+          </li>
+          <li class="mb-4">
+            <a href="set_geofencing.html" class="block hover:text-gray-200"
+              >Set Geofencing</a
+            >
+          </li>
+          <li class="mb-4">
+            <a href="view_analytics.html" class="block hover:text-gray-200"
+              >View Attendance Analytics</a
+            >
+          </li>
+        </ul>
+      </div>
+      <!-- View analytics content -->
+      <div class="flex flex-col items-center justify-center h-screen">
+        <h1 class="text-2xl font-semibold mb-4">View Attendance Analytics</h1>
+        <!-- Display attendance analytics data -->
+        <p>Attendance analytics data goes here.</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,152 +1,140 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <head>
+    <title>Django Tailwind</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            background-color: #111;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
+      /* Animation effects */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px);
         }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-        .bubble {
-            position: absolute;
-            border-radius: 50%;
-            z-index: 0;
-            animation: moveBubble linear infinite;
-            animation-duration: 15s;
-            transition: transform 0.3s ease;
-        }
+      /* Glass morphism effect */
+      .glass-morphism {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        animation: fadeIn 0.5s ease-out;
+      }
 
-        .bubble:hover {
-            transform: scale(1.2);
-        }
+      /* Centering the container */
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        background-image: url("{% static 'forest.jpg' %}");
+        background-size: cover; /* Adjusted this property */
+        background-position: center;
+        background-repeat: no-repeat; /* Ensure the image doesn't repeat */
+      }
 
-        .glass-morphism {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            z-index: 1;
-            animation: glow 2s infinite alternate;
+      /* Ensure the form does not extend beyond the viewport */
+      @media (max-width: 640px) {
+        .max-w-md {
+          width: 90%;
         }
-
-        @keyframes moveBubble {
-            0% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(100px, 100px);
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-
-        @keyframes glow {
-            0% {
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-            }
-            100% {
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            }
-        }
-
-        .neon-gradient {
-            background: linear-gradient(135deg, #ff6b6b, #48bb78, #ff9f40);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-            transition: color 0.3s ease;
-        }
-
-        input:focus::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        input:focus,
-        input:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            transition: box-shadow 0.3s ease;
-        }
-
-        .login-button {
-            background: linear-gradient(135deg, #ff6b6b, #48bb78, #ff9f40);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .login-button:hover {
-            background: linear-gradient(135deg, #ff6b6b, #48bb78, #ff9f40);
-        }
+      }
     </style>
-</head>
+    
+  </head>
 
-<body>
-    <!-- Create 50 bubbles -->
-    <div class="relative h-screen">
-        <div class="absolute inset-0 flex justify-center items-center">
-            <div class="max-w-md w-full p-8 glass-morphism">
-                <h2 class="text-2xl font-semibold mb-4 neon-gradient">Login</h2>
-                <form  method="POST">
-                    <div class="mb-4">
-                        <label for="username" class="block text-gray-400 font-semibold mb-2">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Enter your username"
-                            class="w-full px-4 py-2 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 transition-shadow">
-                    </div>
-                    <div class="mb-4">
-                        <label for="password" class="block text-gray-400 font-semibold mb-2">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Enter your password"
-                            class="w-full px-4 py-2 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 transition-shadow">
-                    </div>
-                    <button type="submit" class="w-full login-button">Login</button>
-                </form>
-            </div>
+  <body>
+    <!-- Container -->
+    <div class="container">
+      <!-- Right Pane -->
+      <div class="max-w-full w-auto p-6 glass-morphism">
+        <h1 class="text-3xl font-semibold mb-6 text-[#FFB000] text-center">
+          Login
+        </h1>
+        <h1 class="text-sm font-semibold mb-6 text-gray-500 text-center">
+          Unlock Success, Log in to Elevate Your Business Flavor!
+        </h1>
+        <div
+          class="mt-4 flex flex-col lg:flex-row items-center justify-between"
+        ></div>
+        {% if messages %}
+        <div class="mb-4">
+          {% for message in messages %}
+          <p class="text-red-500 text-center fade-away">{{ message }}</p>
+          {% endfor %}
         </div>
+        {% endif %}
 
-        <!-- JavaScript to create and animate bubbles -->
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const bubbleContainer = document.querySelector('body');
+        <form method="POST" class="space-y-4">
+          <!-- Your form elements go here -->
+          {% csrf_token %}
+          <div>
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700"
+              >Username</label
+            >
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+            />
+          </div>
 
-                // Create 50 bubbles
-                for (let i = 0; i < 50; i++) {
-                    createBubble();
-                }
-
-                function createBubble() {
-                    const bubble = document.createElement('div');
-                    bubble.classList.add('bubble');
-                    bubble.style.width = Math.floor(Math.random() * 100) + 'px';
-                    bubble.style.height = bubble.style.width;
-                    bubble.style.top = Math.random() * 100 + '%';
-                    bubble.style.left = Math.random() * 100 + '%';
-                    bubble.style.background = 'radial-gradient(circle, #ff6b6b, #48bb78, #ff9f40)';
-                    bubble.style.opacity = Math.random() * 0.6 + 0.2;
-
-                    bubbleContainer.appendChild(bubble);
-                }
-            });
-        </script>
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              class="w-full bg-[#FFB000] text-white p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+        <div class="mt-4 text-sm text-gray-600 text-center">
+          <p>
+            Don't have an account?
+            <a href="#" class="text-black hover:underline">Register here</a>
+          </p>
+        </div>
+      </div>
     </div>
-</body>
-
+    <script>
+        // Fade away error messages after 1 second
+        document.addEventListener("DOMContentLoaded", function () {
+          setTimeout(function () {
+            var errorMessages = document.querySelectorAll(".fade-away");
+            errorMessages.forEach(function (message) {
+              message.classList.add(
+                "opacity-0",
+                "transition-opacity",
+                "duration-500"
+              );
+            });
+          }, 1000);
+        });
+      </script>
+  </body>
 </html>
