@@ -10,15 +10,20 @@
 <div class="container mx-auto py-8 max-w-lg">
     <div class="flex justify-center">
         <video id="videoElement" autoplay class="w-full max-w-md"></video>
+        <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
     </div>
+    <form id="imageForm" method="POST">
+        {% csrf_token %}
+        <input type="hidden" id="imageData" name="image_data">
+    </form>
     <div class="flex flex-col md:flex-row justify-center mt-4 space-x-4 space-y-4">
         <button id="captureButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg">
             Capture Photo
         </button>
-        <button id="recaptureButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg">
+        <button id="recaptureButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
             Retake Photo
         </button>
-        <button id="submitDataButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg">
+        <button id="submitDataButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
             Submit Data
         </button>
     </div>
@@ -28,8 +33,7 @@
     const captureButton = document.getElementById("captureButton");
     const recaptureButton = document.getElementById("recaptureButton");
     const submitDataButton = document.getElementById("submitDataButton");
-
-    let capturedImageData = null;
+    const capturedImage = document.getElementById("capturedImage");
 
     // Get user media
     navigator.mediaDevices.getUserMedia({video: true})
@@ -48,17 +52,12 @@
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Save captured image data
-        capturedImageData = canvas.toDataURL("image/png");
-
-        // Hide the video element
-        video.style.display = "none";
-
         // Show captured image in place of the video element
-        const capturedImage = new Image();
-        capturedImage.src = capturedImageData;
-        capturedImage.classList.add("w-full", "max-w-md", "rounded-lg", "shadow-md"); // Apply Tailwind CSS classes for styling
-        video.parentNode.insertBefore(capturedImage, video); // Insert before the video element
+        capturedImage.src = canvas.toDataURL("image/jpeg");
+        capturedImage.style.display = "block";
+
+        // Set the captured image data in the hidden input field
+        document.getElementById("imageData").value = canvas.toDataURL("image/jpeg");
 
         // Toggle button visibility
         captureButton.style.display = "none";
@@ -68,68 +67,20 @@
 
     // Recapture button click event
     recaptureButton.addEventListener("click", () => {
-        // Remove the captured image
-        const capturedImage = document.querySelector("img");
-        if (capturedImage) {
-            capturedImage.remove();
-        }
-
-        // Show the video element again
-        video.style.display = "block";
+        // Hide the captured image
+        capturedImage.style.display = "none";
 
         // Toggle button visibility
         captureButton.style.display = "inline-block";
         recaptureButton.style.display = "none";
         submitDataButton.style.display = "none";
-
-        // Reset capturedImageData
-        capturedImageData = null;
     });
 
     // Submit data button click event
     submitDataButton.addEventListener("click", () => {
-        if (capturedImageData) {
-            // Send captured image data to Django view
-            fetch("{% url 'attendance_cam' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCookie("csrftoken")  // Remember to implement this function to get CSRF token
-                },
-                body: JSON.stringify({image_data: capturedImageData})
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log("Data submitted successfully");
-                    // Perform actions as needed
-                } else {
-                    console.error("Error submitting data:", response.statusText);
-                }
-            })
-            .catch(error => {
-                console.error("Error submitting data:", error);
-            });
-        } else {
-            console.error("No captured image data available");
-        }
+        // Submit the form
+        document.getElementById("imageForm").submit();
     });
-
-    // Function to get CSRF token from cookies
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-            const cookies = document.cookie.split(";");
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === name + "=") {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
 </script>
 </body>
 </html>
