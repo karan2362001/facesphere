@@ -7,7 +7,8 @@ import numpy as np
 import io
 from PIL import Image
 
-from employees.models import Employee
+from employees.models import Employee,Attendance
+from accounts.models import CustomUser
 
 
 
@@ -46,37 +47,22 @@ def face_enc(image_data):
 def attendance_cam(request):
     if request.method == 'POST' and 'image_data' in request.POST:
         try:
-            
             image_data_base64 = request.POST['image_data']
-            # image_data = base64.b64decode(image_data_base64.split(',')[1])
-            # print(image_data)
-
-            # Get face encodings
             face_encodings = face_enc(image_data_base64)
-            
-
-            # if face_encodings is not None:
-            #     # Perform face recognition or any other operations as needed
-            #     # For demonstration, let's just return the first face encoding
-            #     first_face_encoding = face_encodings[0].tolist()
             if face_encodings is not None:
-                # Retrieve the first face encoding (assuming only one face is present in the image)
                 recent_face_encoding = face_encodings[0]
-                print("hello")
-
-                # Get the name of the person corresponding to the face encoding
                 face_name = get_face_name(recent_face_encoding)
-                print(face_name)
+                user=CustomUser.objects.get(username=face_name)
+                employee=Employee.objects.get(user=user)
+                attendance=Attendance.objects.create(employee=employee,status='1')
                 
-                return render(request, "employee/facecam.html")
+                return render(request, "employee/facecam.html", {'attendance': attendance})
             else:
                 return redirect(attendance_cam)
         except Exception as e:
-            
             return redirect(attendance_cam)
 
     return render(request, "employee/facecam.html")
-
 
 def get_face_name(face_encoding):
     # Fetch all face encodings from the database

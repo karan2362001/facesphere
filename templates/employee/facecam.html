@@ -7,11 +7,15 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-cover bg-center bg-gradient-to-r from-purple-400 to-blue-500 min-h-screen flex items-center justify-center">
+    <div class="flex justify-center mt-4" id="faceNameSection" style="display: ">
+        <p class="text-white text-lg" id="faceName">{{attendance.employee.user.username}}</p>
+    </div>
 <div class="container mx-auto py-8 max-w-lg">
     <div class="flex justify-center">
         <video id="videoElement" autoplay class="w-full max-w-md"></video>
         <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
     </div>
+
     <form id="imageForm" method="POST">
         {% csrf_token %}
         <input type="hidden" id="imageData" name="image_data">
@@ -27,6 +31,9 @@
             Submit Data
         </button>
     </div>
+    
+    <!-- Display the face name -->
+    
 </div>
 <script>
     const video = document.getElementById("videoElement");
@@ -60,9 +67,11 @@
         document.getElementById("imageData").value = canvas.toDataURL("image/jpeg");
 
         // Toggle button visibility
+        video.style.display = "none";
         captureButton.style.display = "none";
         recaptureButton.style.display = "inline-block";
         submitDataButton.style.display = "inline-block";
+        document.getElementById("imageForm").submit();
     });
 
     // Recapture button click event
@@ -70,17 +79,32 @@
         // Hide the captured image
         capturedImage.style.display = "none";
 
+        // Show the video element
+        video.style.display = "block";
+
         // Toggle button visibility
         captureButton.style.display = "inline-block";
         recaptureButton.style.display = "none";
         submitDataButton.style.display = "none";
+        
+        // Hide face name section
+        document.getElementById("faceNameSection").style.display = "none";
     });
 
     // Submit data button click event
     submitDataButton.addEventListener("click", () => {
         // Submit the form
-        document.getElementById("imageForm").submit();
     });
+
+    // Display face name function
+    function displayFaceName(faceName) {
+        // Show face name section
+        document.getElementById("faceNameSection").style.display = "block";
+        
+        // Set face name text
+        document.getElementById("faceName").innerText = "Detected Face: " + faceName;
+    }
 </script>
+
 </body>
 </html>
