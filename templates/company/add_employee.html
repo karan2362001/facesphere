@@ -1,72 +1,183 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Employee Details</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    .popup-container {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration Form</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* CSS for background image */
+        body {
+            background-image: url("{% static 'forest.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    .popup-container.active {
-      opacity: 1;
-      visibility: visible;
-    }
-  </style>
+        /* CSS for form container */
+        .form-container {
+            width: 90%; /* Make the form container 90% of the screen width */
+            max-width: 800px; /* Max width for the form container */
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+        }
+
+        /* Style for form title */
+        .form-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Style for form fields */
+        .form-field label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        /* Style for submit button */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
-  <div class="flex justify-center items-center h-screen">
-    <button id="addEmployeeBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-lg shadow-md transition duration-300 ease-in-out">Add Employee Details</button>
-  </div>
-
-  <div id="popup" class="popup-container fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg p-8 max-w-md">
-    <span class="absolute top-4 right-4 text-gray-600 cursor-pointer" onclick="closePopup()">&times;</span>
-    <h2 class="text-3xl font-bold mb-6 text-gray-800">Add Employee Details</h2>
-    <form id="employeeForm">
-      <div class="mb-6">
-        <label for="firstName" class="block text-sm font-semibold text-gray-700">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-600">
-      </div>
-
-      <div class="mb-6">
-        <label for="lastName" class="block text-sm font-semibold text-gray-700">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-600">
-      </div>
-
-      <div class="mb-6">
-        <label for="number" class="block text-sm font-semibold text-gray-700">Phone Number:</label>
-        <input type="text" id="number" name="number" required pattern="[0-9]{10}" title="Please enter a 10-digit phone number" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-600">
-      </div>
-
-      <div class="mb-6">
-        <label for="email" class="block text-sm font-semibold text-gray-700">Email:</label>
-        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-600">
-      </div>
-
-      <div class="mb-6">
-        <label for="designation" class="block text-sm font-semibold text-gray-700">Designation:</label>
-        <input type="text" id="designation" name="designation" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-600">
-      </div>
-
-      <input type="submit" value="Submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md cursor-pointer transition duration-300 ease-in-out">
-    </form>
-  </div>
-
-  <script>
-    const addEmployeeBtn = document.getElementById('addEmployeeBtn');
-    const popup = document.getElementById('popup');
-
-    addEmployeeBtn.addEventListener('click', () => {
-      popup.classList.add('active');
-    });
-
-    function closePopup() {
-      popup.classList.remove('active');
-    }
-  </script>
+<body>
+    <!-- Form container -->
+    <div class="form-container">
+        <h1 class="form-title">Employee Registration Form</h1>
+        {% if messages %}
+        <div class="mb-4">
+          {% for message in messages %}
+          <p class="text-red-500 text-center fade-away">{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <form  method="post" enctype="multipart/form-data" class="grid grid-cols-2 gap-x-4">
+            {% csrf_token %}
+            <!-- Left side form fields -->
+            <div class="col-span-1">
+                <div class="form-field">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" required>
+                </div>
+                <div class="form-field">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" required>
+                </div>
+                <div class="form-field">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-field">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-field">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password1" name="password1" required>
+                </div>
+                <div class="form-field">
+                    <label for="password2">Confirm Password:</label>
+                    <input type="password" id="password2" name="password2" required>
+                </div>
+            </div>
+            <!-- Right side form fields -->
+            <div class="col-span-1">
+                <div class="form-field">
+                    <label for="date_of_birth">Date of Birth:</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth" required>
+                </div>
+                <div class="form-field">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+                <div class="form-field">
+                    <label for="contact_number">Contact Number:</label>
+                    <input type="text" id="contact_number" name="contact_number" required>
+                </div>
+                <div class="form-field">
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" name="position" required>
+                </div>
+                <div class="form-field">
+                    <label for="picture">Picture:</label>
+                    <input type="file" id="picture" name="picture" accept="image/*" capture="camera">
+                </div>
+                <div class="form-field">
+                    <label for="salary">Salary:</label>
+                    <input type="text" id="salary" name="salary" required>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <button type="submit" class="submit-btn col-span-2">Submit</button>
+        </form>
+    </div>
+    <script>
+        // Fade away error messages after 1 second
+        document.addEventListener("DOMContentLoaded", function () {
+          setTimeout(function () {
+            var errorMessages = document.querySelectorAll(".fade-away");
+            errorMessages.forEach(function (message) {
+              message.classList.add(
+                "opacity-0",
+                "transition-opacity",
+                "duration-500"
+              );
+            });
+          }, 1000);
+        });
+      </script>
 </body>
+
 </html>

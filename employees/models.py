@@ -6,7 +6,7 @@ from accounts.models import CustomUser
 class Employee(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='employees')
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='employees')
+    #branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='employees')
     date_of_birth = models.DateField()
     gender = models.CharField(max_length=10)
     address = models.CharField(max_length=255)
@@ -17,7 +17,7 @@ class Employee(models.Model):
     salary = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __str__(self):
-        return f"{self.username}_{self.company.name}_{self.branch.name}"
+        return f"{self.user.username}_{self.company.name}"
     
     
     

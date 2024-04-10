@@ -35,20 +35,62 @@
       >
         <h1 class="text-2xl font-semibold mb-4">Company Dashboard</h1>
         <ul>
-          <li class="mb-4">
-            <a href="add_employee.html" class="block hover:text-gray-200"
-              >Add Employee</a
-            >
+          <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
+            <a href="{% url 'manage_employee' %}" class="block flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+              Add Employee
+            </a>
           </li>
-          <li class="mb-4">
-            <a href="set_geofencing.html" class="block hover:text-gray-200"
-              >Set Geofencing</a
-            >
+          <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
+            <a href="{% url 'set_geofencing' %}" class="block flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+              Set Geofencing
+            </a>
           </li>
-          <li class="mb-4">
-            <a href="view_analytics.html" class="block hover:text-gray-200"
-              >View Attendance Analytics</a
-            >
+          <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
+            <a href="{% url 'view_analytics' %}" class="block flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              View Analytics
+            </a>
           </li>
         </ul>
       </div>

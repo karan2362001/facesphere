@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
+from accounts.decorators import role_required
 from .forms import LoginForm
 
 # Create your views here.
@@ -47,10 +49,10 @@ def home(request):
         messages.error(request, 'An error occurred.')
         return redirect('user_login')
 
-@login_required
+@role_required(["1"])
 def Company(request):
     return render(request,"company/index.html")
 
-@login_required
+@role_required(["2"])
 def Employee(request):
     return render(request,"employee/facecam.html")
