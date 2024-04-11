@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-z)g$v35m7b(b2fobg=^es$)%4na#-in1fhfj6#59egf0@kem&b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.5','192.168.3.113','127.0.0.1','192.168.25.113']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','karanpatani236.pythonanywhere.com']
 
 
 # Application definition
@@ -78,13 +78,19 @@ WSGI_APPLICATION = "facesphere.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
+# Replace it with your DATABASES.
+DATABASES = {
+    'default': dj_database_url.config(
+        default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
