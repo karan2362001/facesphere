@@ -83,13 +83,25 @@ def add_employee(request):
     return render(request,"company/add_employee.html")
 
 
-
+@role_required(["1"])
 def manage_employee(request):
     employees=Employee.objects.all()
     return render(request,"company/manage_employee.html",{'employees':employees})
 
+@role_required(["1"])
 def set_geofencing(request):
     return render(request,"company/set_geofencing.html")
 
+
+@role_required(["1"])
 def view_analytics(request):
     return render(request,"company/view_analytics.html")
+
+
+@role_required(["1"])
+def show_details_employee(request):
+    return render(request,"company/show_details_employee.html")
+
+
+
+

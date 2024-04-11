@@ -12,6 +12,10 @@ from employees.models import Employee,Attendance
 
 # Create your views here.
 def user_login(request):
+    # if request.user.is_authenticated:
+    #     # If the user is already logged in, redirect them to the home page
+    #     return redirect('home')
+    
     if request.method == 'POST':
         form = LoginForm(request.POST)
         try:
