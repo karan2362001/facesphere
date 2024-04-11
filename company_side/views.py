@@ -85,7 +85,8 @@ def add_employee(request):
 
 
 def manage_employee(request):
-    return render(request,"company/manage_employee.html")
+    employees=Employee.objects.all()
+    return render(request,"company/manage_employee.html",{'employees':employees})
 
 def set_geofencing(request):
     return render(request,"company/set_geofencing.html")

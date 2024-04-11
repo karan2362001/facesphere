@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="permissions-policy" content="camera=*">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Stream and Capture</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -43,14 +45,17 @@
     const capturedImage = document.getElementById("capturedImage");
 
     // Get user media
-    navigator.mediaDevices.getUserMedia({video: true})
-        .then((stream) => {
+    async function getCameraStream() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             video.srcObject = stream;
-        })
-        .catch((err) => {
+        } catch (err) {
             console.error("Error accessing webcam:", err);
-        });
+        }
+    }
 
+    // Call the function to get camera stream when the page loads
+    getCameraStream();
     // Capture button click event
     captureButton.addEventListener("click", () => {
         const canvas = document.createElement("canvas");

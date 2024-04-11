@@ -146,7 +146,7 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="employee-card p-6 rounded-lg">
               <h2 class="text-xl font-semibold mb-2">Present</h2>
-              <p class="text-4xl font-bold">10</p>
+              <p class="text-4xl font-bold">{{total_present}}</p>
             </div>
             <div class="employee-card p-6 rounded-lg">
               <h2 class="text-xl font-semibold mb-2">Leave</h2>
@@ -154,7 +154,7 @@
             </div>
             <div class="employee-card p-6 rounded-lg">
               <h2 class="text-xl font-semibold mb-2">Total Employees</h2>
-              <p class="text-4xl font-bold">12</p>
+              <p class="text-4xl font-bold">{{total_employees}}</p>
             </div>
           </div>
         </div>
@@ -183,45 +183,44 @@
                   <th
                     class="px-6 py-3 bg-gray-800 text-left text-xs leading-4 font-medium uppercase tracking-wider"
                   >
-                    Checking time
+                    Contact No.
                   </th>
+                  <th
+                  class="px-6 py-3 bg-gray-800 text-left text-xs leading-4 font-medium uppercase tracking-wider"
+                >
+                  Gender
+                </th>
+                <th
+                class="px-6 py-3 bg-gray-800 text-left text-xs leading-4 font-medium uppercase tracking-wider"
+              >
+                Checking time
+              </th>
+              <th
+              class="px-6 py-3 bg-gray-800 text-left text-xs leading-4 font-medium uppercase tracking-wider"
+            >
+              Check Out time
+            </th>
                 </tr>
               </thead>
               <tbody class="bg-gray-900 divide-y divide-gray-700">
                 <!-- Sample Data (Replace with dynamic data if applicable) -->
+                {% for present_employee in present_employees%}
                 <tr>
-                  <td class="px-6 py-4 whitespace-no-wrap">1</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">John Doe</td>
+                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.id}}</td>
+                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.employee.user.first_name}} {{present_employee.employee.user.last_name}}</td>
                   <td class="px-6 py-4 whitespace-no-wrap">
-                    Software Engineer
+                    {{present_employee.employee.position}}
                   </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">10:00</td>
+                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.employee.contact_number}}</td>
+                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.employee.gender}}</td>
+                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.check_in_time}}</td>
+                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.check_out_time}}</td>
                 </tr>
+                {% endfor %}
                 <!-- Add more rows as needed -->
-                <tr>
-                  <td class="px-6 py-4 whitespace-no-wrap">1</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">John Doe</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    Software Engineer
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">10:00</td>
-                </tr>
-                <tr>
-                  <td class="px-6 py-4 whitespace-no-wrap">1</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">John Doe</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    Software Engineer
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">10:00</td>
-                </tr>
-                <tr>
-                  <td class="px-6 py-4 whitespace-no-wrap">1</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">John Doe</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    Software Engineer
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">10:00</td>
-                </tr>
+              
+               
+               
               </tbody>
             </table>
           </div>

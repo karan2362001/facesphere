@@ -1,6 +1,6 @@
 from django.db import models
 
-from company.models import Branch, Company
+from company_side.models import Branch, Company
 from accounts.models import CustomUser
 # Create your models here.
 class Employee(models.Model):
@@ -30,4 +30,4 @@ class Attendance(models.Model):
     status = models.CharField(max_length=20, choices=[('1', 'Present'), ('0', 'Absent')], default='0')
     
     def __str__(self):
-        return f"{self.employee.username}_{self.company.name}_{self.branch.name}"
+        return f"{self.employee.user.username}"

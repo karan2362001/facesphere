@@ -9,7 +9,8 @@ from PIL import Image
 
 from employees.models import Employee,Attendance
 from accounts.models import CustomUser
-
+from django.utils import timezone
+from django.contrib import messages
 
 
 
@@ -50,16 +51,37 @@ def attendance_cam(request):
             image_data_base64 = request.POST['image_data']
             face_encodings = face_enc(image_data_base64)
             if face_encodings is not None:
-                recent_face_encoding = face_encodings[0]
-                face_name = get_face_name(recent_face_encoding)
-                user=CustomUser.objects.get(username=face_name)
-                employee=Employee.objects.get(user=user)
-                attendance=Attendance.objects.create(employee=employee,status='1')
                 
-                return render(request, "employee/facecam.html", {'attendance': attendance})
+                recent_face_encoding = face_encodings[0]
+                
+                face_name = get_face_name(recent_face_encoding)
+                
+                user=CustomUser.objects.get(username=face_name)
+                
+                employee=Employee.objects.get(user=user)
+                
+                today = timezone.now().date()
+                
+                attendance=Attendance.objects.get(employee=employee, date=today, status='1')
+                if attendance and attendance.check_in_time and attendance.check_out_time:
+                    messages.error("Already filled attendance for this day.")
+                    return render(request, "employee/facecam.html", {'attendance': attendance})
+                else:
+                    if attendance and not attendance.check_out_time:
+                        
+                        attendance.check_out_time=timezone.now()
+                        
+                        attendance.save()
+                        messages.success("Check Out Time Added successfully")
+                        return render(request, "employee/facecam.html", {'attendance': attendance})
+                    else:
+                        attendance=Attendance.objects.create(employee=employee,status='1')
+                        messages.success("Check In Time Added successfully")
+                    return render(request, "employee/facecam.html", {'attendance': attendance})
             else:
                 return redirect(attendance_cam)
         except Exception as e:
+            messages.error(f"Error while handling request {e}")
             return redirect(attendance_cam)
 
     return render(request, "employee/facecam.html")
@@ -77,10 +99,6 @@ def get_face_name(face_encoding):
         print("++++++++++++++++")
         print(match[0])
         if match[0]:  # If there is a match
-            print("1212121")
-            # Return the corresponding name or identifier associated with the face encoding
-            
-
             return Employee.objects.get(face_encoding=json.dumps(db_encoding)).user.username
     return None  # If no match is found
 

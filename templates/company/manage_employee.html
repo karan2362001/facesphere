@@ -31,18 +31,20 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
+                {% for employee in employees %}
                 <!-- Employee Data -->
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">1</td>
-                    <td class="px-6 py-4 whitespace-nowrap">John Doe</td>
-                    <td class="px-6 py-4 whitespace-nowrap">john@example.com</td>
-                    <td class="px-6 py-4 whitespace-nowrap">Developer</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{employee.id}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{employee.user.first_name}} {{employee.user.last_name}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{employee.user.email}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{employee.position}}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
                         <a href="#" class="text-green-600 hover:text-green-900 mr-3">View</a>
                         <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
                     </td>
                 </tr>
+                {% endfor %}
                 <!-- More Employee Data -->
                 <!-- Replace this section with dynamic data using server-side rendering or JavaScript -->
             </tbody>

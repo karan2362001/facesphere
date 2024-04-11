@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -5,6 +6,9 @@ from django.contrib import messages
 
 from accounts.decorators import role_required
 from .forms import LoginForm
+from accounts.models import CustomUser
+from company_side.models import Company
+from employees.models import Employee,Attendance 
 
 # Create your views here.
 def user_login(request):
@@ -38,9 +42,9 @@ def user_login(request):
 def home(request):
     try:
         if request.user.role == '1':
-            return redirect('Company')
+            return redirect('Company_view')
         elif request.user.role == '2':
-            return redirect('Employee')
+            return redirect('Employee_view')
         else:
             # Handle other roles or unauthorized access
             messages.error(request, 'Unauthorized access.')
@@ -50,9 +54,23 @@ def home(request):
         return redirect('user_login')
 
 @role_required(["1"])
-def Company(request):
-    return render(request,"company/index.html")
+def Company_view(request):
+    # Get today's date
+    today = timezone.now().date()
+    
+    # Get the logged-in user's company
+    company= Company.objects.get(user=request.user)
+    # Count the total number of employees belonging to the company
+    total_employees = Employee.objects.filter(company=company).count()
+    
+    # Filter attendance records for present employees today and order by check-in time (latest first)
+    present_employees = Attendance.objects.filter(date=today, status='1').order_by('-check_in_time')
+    
+    # Count the total number of present employees
+    total_present = present_employees.count()
+    
+    return render(request, "company/index.html", {'present_employees': present_employees, 'total_present': total_present, 'total_employees': total_employees})
 
 @role_required(["2"])
-def Employee(request):
+def Employee_view(request):
     return render(request,"employee/facecam.html")
