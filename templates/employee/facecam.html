@@ -12,6 +12,14 @@
     <div class="flex justify-center mt-4" id="faceNameSection" style="display: ">
         <p class="text-white text-lg" id="faceName">{{attendance.employee.user.username}}</p>
     </div>
+
+    {% if messages %}
+        <div class="mb-4">
+          {% for message in messages %}
+          <p class="text-red-500 text-center fade-away">{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
 <div class="container mx-auto py-8 max-w-lg">
     <div class="flex justify-center">
         <video id="videoElement" autoplay class="w-full max-w-md"></video>

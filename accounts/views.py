@@ -42,6 +42,7 @@ def user_login(request):
 def home(request):
     try:
         if request.user.role == '1':
+            print("INNN ")
             return redirect('Company_view')
         elif request.user.role == '2':
             return redirect('Employee_view')

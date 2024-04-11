@@ -61,27 +61,39 @@ def attendance_cam(request):
                 employee=Employee.objects.get(user=user)
                 
                 today = timezone.now().date()
-                
-                attendance=Attendance.objects.get(employee=employee, date=today, status='1')
-                if attendance and attendance.check_in_time and attendance.check_out_time:
-                    messages.error("Already filled attendance for this day.")
-                    return render(request, "employee/facecam.html", {'attendance': attendance})
-                else:
-                    if attendance and not attendance.check_out_time:
-                        
-                        attendance.check_out_time=timezone.now()
-                        
-                        attendance.save()
-                        messages.success("Check Out Time Added successfully")
+                print("++++++")
+                attendance1=Attendance.objects.filter(employee=employee, date=today, status='1').exists()
+                if attendance1 :
+                    print("#####")
+                    attendance=Attendance.objects.get(employee=employee, date=today, status='1')
+                    if attendance and attendance.check_in_time and attendance.check_out_time:
+                        print("-------")
+                        messages.error(request,"Already filled attendance for this day.")
                         return render(request, "employee/facecam.html", {'attendance': attendance})
                     else:
-                        attendance=Attendance.objects.create(employee=employee,status='1')
-                        messages.success("Check In Time Added successfully")
+                        if attendance and not attendance.check_out_time:
+                            print("chekkkkk")
+                            
+                            attendance.check_out_time=timezone.now()
+                            
+                            attendance.save()
+                            messages.success(request,"Check Out Time Added successfully")
+                            return render(request, "employee/facecam.html", {'attendance': attendance})
+                        else:
+                            print("create   ---")
+                            attendance=Attendance.objects.create(employee=employee,status='1')
+                            messages.success(request,"Check In Time Added successfully")
+                        return render(request, "employee/facecam.html", {'attendance': attendance})
+                else:
+                    print("@@@@@")
+                    attendance=Attendance.objects.create(employee=employee,status='1')
+                    #messages.success("Check In Time Added successfully")
                     return render(request, "employee/facecam.html", {'attendance': attendance})
             else:
                 return redirect(attendance_cam)
         except Exception as e:
-            messages.error(f"Error while handling request {e}")
+            print("!!!!!!")
+            #messages.error(f"Error while handling request {e}")
             return redirect(attendance_cam)
 
     return render(request, "employee/facecam.html")
