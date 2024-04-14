@@ -13,9 +13,10 @@
       /* Custom Styles */
       /* Gradient Background */
       body {
-        background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-        color: #fff;
-      }
+           /* Glass morphism effect */
+      background: linear-gradient(to right, #102c57, #102c57, #102c57);
+      color: #fefaf6;
+    }
       .card {
         background: rgba(0, 0, 0, 0.5);
         border-radius: 20px;
@@ -58,24 +59,34 @@
         font-size: 0.8rem;
         margin-top: 0.5rem;
       }
+  
       /* Glass morphism effect */
       .glass {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(254, 250, 246, 0.1);
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border: 1px solid rgba(234, 219, 200, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(16, 44, 87, 0.37);
       }
       /* Sidebar */
       #sidebar {
-        background: linear-gradient(to bottom, #4a148c, #880e4f);
+        background: linear-gradient(to bottom, #102c57, #102c57);
       }
       /* Sidebar Menu Link */
       #sidebar a {
-        color: #fff;
+        color: #fefaf6;
       }
       /* Employee Card Background */
       .employee-card {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgb(16 44 87);
+      }
+      /* Table Header */
+      .table-header {
+        background-color: #102c57;
+        color: #fefaf6;
+      }
+      /* Table Row Background */
+      .table-row {
+        background-color: rgba(254, 250, 246, 0.1);
       }
       /* Fullscreen button */
       #fullscreenBtn {
@@ -83,8 +94,8 @@
         bottom: 20px;
         right: 20px;
         z-index: 9999;
-        background-color: #4a148c;
-        color: #fff;
+        background-color: #102c57;
+        color: #fefaf6;
         border: none;
         border-radius: 50%;
         width: 40px;
@@ -159,7 +170,10 @@
             />
           </svg>
         </button>
-        <h1 class="text-2xl font-semibold mb-4">Company Dashboard</h1>
+        <div class="flex items-center mb-4">
+          <img src="{{ company_name.logo.url }}" alt="Company Logo" class="w-10 h-10 mr-2">
+          <h1 class="text-2xl font-semibold">{{ company_name }}</h1>
+        </div>
         <ul>
           <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
             <a href="{% url 'Company_view' %}" class="block flex items-center">
@@ -175,7 +189,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5v14"/>
               </svg>
-              Add Employee
+              Manage Employee
             </a>
           </li>
           <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
@@ -200,7 +214,22 @@
       </div>
       <!-- Main Content -->
      
-      
+      <div class="container mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Employee Attendance Analytics</h1>
+        <div>
+            <label for="employee">Select Employee:</label>
+            <select id="employee" onchange="filterAttendance()">
+                <option value="">All Employees</option>
+                <!-- Populate with employee options -->
+                {% for employee in employees %}
+                    <option value="{{ employee.id }}">{{ employee.user.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div id="chartContainer" class="mt-4">
+            <!-- Chart will be rendered here -->
+        </div>
+    </div>
       <!-- Fullscreen Button -->
       <button id="fullscreenBtn" onclick="toggleFullScreen()">
         <svg
@@ -217,6 +246,35 @@
         </svg>
       </button>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script>
+    function filterAttendance() {
+        var employeeId = document.getElementById('employee').value;
+
+        // AJAX request to fetch filtered data
+        fetch(`/filter_attendance?employee_id=${employeeId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Manipulate data and update chart
+                updateChart(data);
+            });
+    }
+
+    function updateChart(data) {
+        // Your chart rendering logic using Chart.js
+    }
+
+    // Initial chart rendering when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch initial data and render chart
+        fetch('/filter_attendance')
+            .then(response => response.json())
+            .then(data => {
+                // Render initial chart
+                updateChart(data);
+            });
+    });
+</script>
     <script>
       // JavaScript to handle sidebar toggle
       const menuBtn = document.getElementById("menuBtn");

@@ -9,36 +9,48 @@
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
     <style>
       /* Custom Styles */
       /* Gradient Background */
       body {
-        background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-        color: #fff;
+        background: linear-gradient(to right, #102c57, #102c57, #102c57);
+        color: #fefaf6;
       }
       .card {
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(254, 250, 246, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(234, 219, 200, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(16, 44, 87, 0.37);
+
         border-radius: 20px;
         padding: 2rem;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+   
         max-width: 80%;
         width: 100%;
         text-align: center;
         color: #fff;
-        backdrop-filter: blur(10px);
+
         margin-left: 288px;
       }
       .input-container {
         margin-bottom: 1.5rem;
       }
       .glass-container {
-        background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
         padding: 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      
+
+        background: rgb(16 44 87 / 99%);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(234, 219, 200, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(16, 44, 87, 0.37);
       }
       .submit-btn {
-        background: linear-gradient(to bottom, #4a148c, #880e4f);
+        background: linear-gradient(to bottom, #102c57, #102c57);
         color: white;
         padding: 0.8rem 1.5rem;
         border: none;
@@ -51,7 +63,8 @@
       }
       /* Set input text color to black */
       input[type="text"] {
-        color: black;
+        color: #f9fbff;
+        background-color: #284067
       }
       .error-message {
         color: red;
@@ -59,23 +72,35 @@
         margin-top: 0.5rem;
       }
       /* Glass morphism effect */
+     
+      /* Glass morphism effect */
+    
       .glass {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(254, 250, 246, 0.1);
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border: 1px solid rgba(234, 219, 200, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(16, 44, 87, 0.37);
       }
       /* Sidebar */
       #sidebar {
-        background: linear-gradient(to bottom, #4a148c, #880e4f);
+        background: linear-gradient(to bottom, #102c57, #102c57);
       }
       /* Sidebar Menu Link */
       #sidebar a {
-        color: #fff;
+        color: #fefaf6;
       }
       /* Employee Card Background */
       .employee-card {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgb(16 44 87);
+      }
+      /* Table Header */
+      .table-header {
+        background-color: #102c57;
+        color: #fefaf6;
+      }
+      /* Table Row Background */
+      .table-row {
+        background-color: rgba(254, 250, 246, 0.1);
       }
       /* Fullscreen button */
       #fullscreenBtn {
@@ -83,8 +108,8 @@
         bottom: 20px;
         right: 20px;
         z-index: 9999;
-        background-color: #4a148c;
-        color: #fff;
+        background-color: #102c57;
+        color: #fefaf6;
         border: none;
         border-radius: 50%;
         width: 40px;
@@ -104,7 +129,7 @@
     -webkit-appearance: none;
     width: 100%;
     height: 10px;
-    background: linear-gradient(to bottom, #4a148c, #880e4f);
+    background: linear-gradient(to bottom, #ebebeb, #284167);
     outline: none;
     border-radius: 5px;
     opacity: 0.7;
@@ -132,9 +157,64 @@
     border-radius: 50%;
     cursor: pointer;
   }
+  .ellipse-1,
+  .ellipse-1 * {
+    box-sizing: border-box;
+  }
+  .ellipse-1 {
+    background: radial-gradient(
+      closest-side,
+      rgba(119, 23, 179, 1) 0%,
+      rgba(223, 9, 202, 1) 100%
+    );
+    border-radius: 50%;
+    width: 280px;
+    height: 280px;
+    position: absolute;
+    z-index: -1;
+    top: 1px;
+    right: 1px;
+  }
+  .ellipse-2,
+  .ellipse-2 * {
+    box-sizing: border-box;
+  }
+  .ellipse-2 {
+    background: radial-gradient(
+      closest-side,
+      rgba(119, 23, 179, 1) 0%,
+      rgba(223, 9, 202, 1) 100%
+    );
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    z-index: -1;
+    bottom: 1px;
+    left: 200px;
+  }
+  .ellipse-5,
+  .ellipse-5 * {
+    box-sizing: border-box;
+  }
+  .ellipse-5 {
+    background: radial-gradient(
+      closest-side,
+      rgba(114, 4, 123, 1) 0%,
+      rgba(103, 9, 223, 1) 100%
+    );
+    border-radius: 50%;
+    width:100px;
+    height: 100px;
+    position: absolute;
+    z-index: -1;
+    bottom: 1px;
+    right: 1px;
+  }
     </style>
   </head>
   <body class="bg-gray-100">
+    
     <!-- Company Dashboard -->
     <div class="flex flex-col md:flex-row h-screen">
       <!-- Sidebar -->
@@ -159,7 +239,10 @@
             />
           </svg>
         </button>
-        <h1 class="text-2xl font-semibold mb-4">Company Dashboard</h1>
+        <div class="flex items-center mb-4">
+          <img src="{{ company_name.logo.url }}" alt="Company Logo" class="w-10 h-10 mr-2">
+          <h1 class="text-2xl font-semibold">{{ company_name }}</h1>
+        </div>
         <ul>
           <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
             <a href="{% url 'Company_view' %}" class="block flex items-center">
@@ -175,7 +258,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5v14"/>
               </svg>
-              Add Employee
+              Manage Employee
             </a>
           </li>
           <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
@@ -187,27 +270,45 @@
             </a>
           </li>
           <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
-            <a href="{% url 'view_analytics' %}" class="block flex items-center">
+            <a href="{% url 'manage_employee_leave' %}" class="block flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4 0a7 7 0 1 1-14 0 7 7 0 0 1 14 0zm-7 7a4 4 0 0 1-4-4"/>
               </svg>
-              View Analytics
+             Manage Leaves
             </a>
           </li>
           
           
         </ul>
+        <div class="absolute bottom-8 left-8">
+          <a href="{% url 'user_logout' %}" class="flex items-center mb-4 menu-item p-3 px-12 rounded-lg hover:bg-gray-800 table-header text-white">
+            <i class="ri-expand-left-line ri-xl mr-2"></i>
+            Logout
+          </a>
+        </div>
+        
       </div>
       <!-- Main Content -->
+      <div class="ellipse-1"></div>
+      <div class="ellipse-2"></div>
+      <div class="ellipse-5"></div>
       <div class="card">
         <h1 class="text-4xl mb-6">Live Location and Geofencing</h1>
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <p class="{% if message.tags == 'success' %}text-green-500{% elif message.tags == 'error' %}text-red-500{% elif message.tags == 'warning' %}text-yellow-500{% elif message.tags == 'info' %}text-blue-500{% endif %} text-center fade-away">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    
         <div class="glass-container input-container">
           <label for="latitude" class="mr-2 text-lg">Latitude:</label>
           <input
             type="text"
             id="latitude"
             readonly
-            class="bg-white p-2 rounded border"
+            class="bg-to-blue-100 p-2 rounded border"
           />
         </div>
         <div class="glass-container input-container">
@@ -228,10 +329,10 @@
             id="range"
             min="100"
             max="1000"
-            step="100"
-            value="500"
+            step="50"
+            value="100"
           />
-          <span id="rangeValue" class="ml-2 text-lg">500m</span>
+          <span id="rangeValue" class="ml-2 text-lg">100m</span>
         </div>
         <button id="submitBtn" class="submit-btn mt-4">Submit</button>
         <div id="errorDisplay" class="error-message"></div>
@@ -286,7 +387,7 @@
           var latitude = document.getElementById("latitude");
           var longitude = document.getElementById("longitude");
   
-          latitude.value = position.coords.latitude.toFixed(6);
+          latitude.value = position.coords.latitude;
           longitude.value = position.coords.longitude.toFixed(6);
         }
   
@@ -342,10 +443,11 @@
             }
   
             // Send data to backend
-            fetch("/your-backend-endpoint", {
+            fetch("{% url 'set_geofencing' %}", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                "X-CSRFToken": getCookie('csrftoken'),
               },
               body: JSON.stringify({
                 latitude: latitude,
@@ -359,7 +461,8 @@
                 }
                 console.log("Data sent successfully:", response);
                 // Clear any previous error message
-                document.getElementById("errorDisplay").textContent = "";
+                
+                document.getElementById("errorDisplay").textContent = "Data Sent Successfully";
               })
               .catch((error) => {
                 console.error("Error sending data:", error);
@@ -368,6 +471,22 @@
                   "Error sending data. Please try again.";
               });
           });
+
+          function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
       </script>
   </body>
 </html>

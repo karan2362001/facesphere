@@ -68,9 +68,9 @@
         ></div>
         {% if messages %}
         <div class="mb-4">
-          {% for message in messages %}
-          <p class="text-red-500 text-center fade-away">{{ message }}</p>
-          {% endfor %}
+            {% for message in messages %}
+            <p class="{% if message.tags == 'success' %}text-green-500{% elif message.tags == 'error' %}text-red-500{% elif message.tags == 'warning' %}text-yellow-500{% elif message.tags == 'info' %}text-blue-500{% endif %} text-center fade-away">{{ message }}</p>
+            {% endfor %}
         </div>
         {% endif %}
 

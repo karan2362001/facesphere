@@ -5,3 +5,4 @@ from . import models
 
 admin.site.register(models.Employee)
 admin.site.register(models.Attendance)
+admin.site.register(models.Leave)

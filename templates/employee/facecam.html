@@ -2,24 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="permissions-policy" content="camera=*">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Stream and Capture</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+
+   /* Gradient Background */
+   body {
+    background: linear-gradient(to right, #102c57, #102c57, #102c57);
+    color: #fefaf6;
+  }
+
+    </style>
 </head>
-<body class="bg-cover bg-center bg-gradient-to-r from-purple-400 to-blue-500 min-h-screen flex items-center justify-center">
+<body class="bg-cover bg-center  min-h-screen flex  flex-row">
+    
+   <div id="messageContainer">
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <p class="{% if message.tags == 'success' %}text-green-500{% elif message.tags == 'error' %}text-red-500{% elif message.tags == 'warning' %}text-yellow-500{% elif message.tags == 'info' %}text-blue-500{% endif %} text-center fade-away">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
     <div class="flex justify-center mt-4" id="faceNameSection" style="display: ">
         <p class="text-white text-lg" id="faceName">{{attendance.employee.user.username}}</p>
     </div>
 
-    {% if messages %}
-        <div class="mb-4">
-          {% for message in messages %}
-          <p class="text-red-500 text-center fade-away">{{ message }}</p>
-          {% endfor %}
-        </div>
-        {% endif %}
 <div class="container mx-auto py-8 max-w-lg">
     <div class="flex justify-center">
         <video id="videoElement" autoplay class="w-full max-w-md"></video>
@@ -31,13 +41,13 @@
         <input type="hidden" id="imageData" name="image_data">
     </form>
     <div class="flex flex-col md:flex-row justify-center mt-4 space-x-4 space-y-4">
-        <button id="captureButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg">
-            Capture Photo
+        <button id="captureButton"  class=" hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg" >
+           📸 Capture Photo
         </button>
         <button id="recaptureButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
             Retake Photo
         </button>
-        <button id="submitDataButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
+        <button id="submitDataButton" class=" hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
             Submit Data
         </button>
     </div>
@@ -61,7 +71,22 @@
             console.error("Error accessing webcam:", err);
         }
     }
+ // Fetch and send location data
+ navigator.geolocation.getCurrentPosition(position => {
+    const latitude = position.coords.latitude  ;
+    const longitude = position.coords.longitude;
+    
+    // Append latitude and longitude to the form data
+    document.getElementById("imageForm").innerHTML += `
+        <input type="hidden" name="latitude" id="latitude" value="${latitude}">
+        <input type="hidden" name="longitude" id="longitude" value="${longitude}">
+    `;
 
+    // Submit the form
+
+}, error => {
+    console.error("Error fetching location:", error);
+});
     // Call the function to get camera stream when the page loads
     getCameraStream();
     // Capture button click event
@@ -84,7 +109,10 @@
         captureButton.style.display = "none";
         recaptureButton.style.display = "inline-block";
         submitDataButton.style.display = "inline-block";
+
         document.getElementById("imageForm").submit();
+
+       
     });
 
     // Recapture button click event
