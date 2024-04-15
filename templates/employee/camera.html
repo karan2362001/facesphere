@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camera View</title>
+<style>
+/* CSS Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.camera-view {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.camera-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.camera-button {
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin: 0 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.camera-button img {
+  width: 30px;
+  height: 30px;
+}
+</style>
+</head>
+<body>
+
+<!-- HTML Structure -->
+<div class="container">
+  <!-- Live Video Stream -->
+  <video class="camera-view" id="video" autoplay></video>
+
+  <!-- Camera Controls -->
+  <div class="camera-controls">
+    <button class="camera-button" id="record-button">
+      <img src="record-icon.png" alt="Record">
+    </button>
+    <button class="camera-button" id="capture-button">
+      <img src="capture-icon.png" alt="Capture">
+    </button>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get references to the record and capture buttons
+  const recordButton = document.getElementById('record-button');
+  const captureButton = document.getElementById('capture-button');
+  const videoElement = document.getElementById('video');
+  let stream;
+  let mediaRecorder;
+  let recordedChunks = [];
+
+  // Access the user's camera and stream the video
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(mediaStream) {
+      stream = mediaStream;
+      videoElement.srcObject = mediaStream;
+      mediaRecorder = new MediaRecorder(mediaStream);
+
+      // Event listener for when data is available from the MediaRecorder
+      mediaRecorder.ondataavailable = function(event) {
+        recordedChunks.push(event.data);
+      };
+
+      // Event listener for when recording is stopped
+      mediaRecorder.onstop = function() {
+        // Create a Blob from the recorded chunks
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        // Create a URL for the Blob
+        const videoURL = URL.createObjectURL(blob);
+        // Open the recorded video in a new tab
+        window.open(videoURL);
+        // Clear the recordedChunks array
+        recordedChunks = [];
+      };
+    })
+    .catch(function(err) {
+      console.error('Error accessing the camera: ', err);
+    });
+
+  // Add event listeners for the buttons
+  recordButton.addEventListener('click', toggleRecording);
+  captureButton.addEventListener('click', capturePhoto);
+
+  function toggleRecording() {
+    if (stream && stream.getVideoTracks().length > 0) {
+      const videoTrack = stream.getVideoTracks()[0];
+      if (!videoTrack.enabled) {
+        startRecording();
+      } else {
+        stopRecording();
+      }
+    }
+  }
+
+  function startRecording() {
+    mediaRecorder.start();
+    recordButton.innerHTML = 'Stop';
+    recordButton.style.backgroundColor = 'red';
+  }
+
+  function stopRecording() {
+    mediaRecorder.stop();
+    recordButton.innerHTML = 'Record';
+    recordButton.style.backgroundColor = '#fff';
+  }
+
+  function capturePhoto() {
+    const canvas = document.createElement('canvas');
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
+    const context = canvas.getContext('2d');
+    context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+    const photoURL = canvas.toDataURL('image/png');
+    window.open(photoURL);
+  }
+});
+</script>
+
+</body>
+</html>

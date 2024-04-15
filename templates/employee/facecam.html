@@ -6,18 +6,62 @@
     <title>Live Stream and Capture</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
+        /* Gradient Background */
+        body {
+            background: linear-gradient(to right, #102c57, #102c57, #102c57);
+            color: #fefaf6;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-   /* Gradient Background */
-   body {
-    background: linear-gradient(to right, #102c57, #102c57, #102c57);
-    color: #fefaf6;
-  }
+        .message-container {
+            display:flex;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .camera-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            
+        }
+
+        .popup-container {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 1000;
+        }
+
+        .employee-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
     </style>
 </head>
-<body class="bg-cover bg-center  min-h-screen flex  flex-row">
+<body class="bg-cover bg-center min-h-screen flex flex-row" style="background: linear-gradient(to right, #102c57, #102c57, #102c57);">
     
-   <div id="messageContainer">
+    <div class="message-container">
         {% if messages %}
         <div class="mb-4">
             {% for message in messages %}
@@ -25,41 +69,43 @@
             {% endfor %}
         </div>
         {% endif %}
-    </div>
-    <div class="flex justify-center mt-4" id="faceNameSection" style="display: ">
-        <p class="text-white text-lg" id="faceName">{{attendance.employee.user.username}}</p>
+        <div class="camera-container">
+            <div class="flex justify-center mt-4" id="faceNameSection" style="display: ">
+                <p class="text-white text-lg" id="faceName">{{attendance.employee.user.username}}</p>
+            </div>
+            <div class="container mx-auto py-8 max-w-lg">
+                <div class="flex justify-center">
+                    <video id="videoElement" autoplay class="w-full max-w-md"></video>
+                    <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
+                </div>
+    
+                <form id="imageForm" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="imageData" name="image_data">
+                </form>
+                <div class="flex flex-col md:flex-row justify-center mt-4 space-x-4 space-y-4">
+                    <button id="captureButton" class="hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg">
+                        📸 Capture Photo
+                    </button>
+                    <button id="recaptureButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
+                        Retake Photo
+                    </button>
+                    <button id="submitDataButton" class="hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
+                        Submit Data
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-<div class="container mx-auto py-8 max-w-lg">
-    <div class="flex justify-center">
-        <video id="videoElement" autoplay class="w-full max-w-md"></video>
-        <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
-    </div>
+   
 
-    <form id="imageForm" method="POST">
-        {% csrf_token %}
-        <input type="hidden" id="imageData" name="image_data">
-    </form>
-    <div class="flex flex-col md:flex-row justify-center mt-4 space-x-4 space-y-4">
-        <button id="captureButton"  class=" hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg" >
-           📸 Capture Photo
-        </button>
-        <button id="recaptureButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
-            Retake Photo
-        </button>
-        <button id="submitDataButton" class=" hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
-            Submit Data
-        </button>
-    </div>
     
-    <!-- Display the face name -->
-    
-</div>
 <script>
     const video = document.getElementById("videoElement");
     const captureButton = document.getElementById("captureButton");
     const recaptureButton = document.getElementById("recaptureButton");
-    const submitDataButton = document.getElementById("submitDataButton");
+
     const capturedImage = document.getElementById("capturedImage");
 
     // Get user media
@@ -108,7 +154,7 @@
         video.style.display = "none";
         captureButton.style.display = "none";
         recaptureButton.style.display = "inline-block";
-        submitDataButton.style.display = "inline-block";
+        submitDataButton.style.display = "none";
 
         document.getElementById("imageForm").submit();
 
@@ -145,6 +191,20 @@
         // Set face name text
         document.getElementById("faceName").innerText = "Detected Face: " + faceName;
     }
+    document.addEventListener('DOMContentLoaded', function() {
+        const openPopupButton = document.getElementById('openPopupButton');
+        const closePopupButton = document.getElementById('closePopupButton');
+        const employeeDetailsPopup = document.getElementById('employeeDetailsPopup');
+    
+        openPopupButton.addEventListener('click', function() {
+            employeeDetailsPopup.style.display = 'block';
+        });
+    
+        closePopupButton.addEventListener('click', function() {
+            employeeDetailsPopup.style.display = 'none';
+        });
+    });
+    
 </script>
 
 </body>
