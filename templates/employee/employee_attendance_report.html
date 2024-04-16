@@ -194,85 +194,67 @@
       <div class="md:ml-72 overflow-y-auto flex-1 p-8 lg:p-20 glass">
         <!-- Employee Details -->
         <div class="mb-8">
-          <h2 class="text-2xl font-semibold mb-4">Employee Details</h2>
+          <h2 class="text-2xl font-semibold mb-4">Employee Details for 🗓️ {{selected_month}} - {{selected_year}}</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="employee-card p-6 rounded-lg">
               <h2 class="text-xl font-semibold mb-2">Present</h2>
-              <p class="text-4xl font-bold">{{total_present}}</p>
+              <p class="text-4xl font-bold">{{present_days}}</p>
             </div>
             <div class="employee-card p-6 rounded-lg">
-              <h2 class="text-xl font-semibold mb-2">Leave</h2>
-              <p class="text-4xl font-bold">{{employees_on_leave_today}}</p>
+              <h2 class="text-xl font-semibold mb-2">Leave Total</h2>
+              <p class="text-4xl font-bold">{{total_leave_days}}</p>
             </div>
             <div class="employee-card p-6 rounded-lg">
-              <h2 class="text-xl font-semibold mb-2">Total Employees</h2>
-              <p class="text-4xl font-bold">{{total_employees}}</p>
+              <h2 class="text-xl font-semibold mb-2">Absent Days</h2>
+              <p class="text-4xl font-bold">{{absent_days}}</p>
             </div>
           </div>
         </div>
         <!-- Employee Table -->
         <div>
-          <h2 class="text-2xl font-semibold mb-4">Employee Table</h2>
-          <div class="overflow-x-auto">
+         
+          <h2 class="text-2xl font-semibold mb-4">Employee attendance statments</h2>
+          
+          <form method="GET">
+            <label for="selected_date">Select Month and Year: </label>
+            <input type="month" class="table-header rounded-lg" name="selected_date" id="selected_date" value="{{ selected_year }}-{{ selected_month | stringformat:'02d' }}">
+            <button type="submit" class="hover:bg-gray-800 rounded-lg">Search</button>
+           
+              <a href="{% url 'download_attendance_report' selected_year selected_month %}" class="rounded-lg table-header ml-52 hover:bg-gray-800 text-white py-2 px-4 ">Download Report</a>
+             
+        </form>
+   
+      
+        <div class="overflow-x-auto">
+          <br>
             <table class="min-w-full divide-y divide-gray-200">
-              <thead>
-                <tr class="table-header">
-                  <th
-                    class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider"
-                  >
-                    ID
-                  </th>
-                  <th
-                    class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider"
-                  >
-                    Name
-                  </th>
-                  <th
-                    class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider"
-                  >
-                    Designation
-                  </th>
-                  <th
-                    class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider"
-                  >
-                    Contact No.
-                  </th>
-                  <th
-                  class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider"
-                >
-                  Gender
-                </th>
-                <th
-                class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider"
-              >
-                Checking time
-              </th>
-              <th
-              class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider"
-            >
-              Check Out time
-            </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-700">
-                <!-- Sample Data (Replace with dynamic data if applicable) -->
-                {% for present_employee in present_employees%}
-                <tr class="table-row">
-                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.id}}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.employee.user.first_name}} {{present_employee.employee.user.last_name}}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    {{present_employee.employee.position}}
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.employee.contact_number}}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.employee.gender}}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.check_in_time}}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap">{{present_employee.check_out_time}}</td>
-                </tr>
-                {% endfor %}
-                <!-- Add more rows as needed -->
-              </tbody>
+                <thead>
+                    <tr class="table-header">
+                        <th class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider">Employee Name</th>
+                        <th class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider">Designation</th>
+                        <th class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider">Contact No.</th>
+                        <th class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider">Gender</th>
+                        <th class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider">Check In Time</th>
+                        <th class="px-6 py-3 text-left text-xs leading-4 font-medium uppercase tracking-wider">Check Out Time</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700">
+                    {% for employees in present_days_employee %}
+                    <tr class="table-row">
+                        <td class="px-6 py-4 whitespace-no-wrap">{{ employees.id }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap">{{ employees.employee.user.first_name }} {{ attendance_record.employee.user.last_name }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap">{{ employees.employee.position }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap">{{ employees.employee.contact_number }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap">{{ employees.employee.gender }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap">{{ employees.check_in_time }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap">{{ employees.check_out_time }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-          </div>
+        </div>
+        
         </div>
       </div>
       <!-- Fullscreen Button -->

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +28,7 @@ SECRET_KEY = "django-insecure-z)g$v35m7b(b2fobg=^es$)%4na#-in1fhfj6#59egf0@kem&b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','.vercel.app']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','.vercel.app','192.168.1.5']
 
 
 # Application definition
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     "api",
     "company_side",
     "employees",
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "facesphere.urls"
@@ -97,6 +100,26 @@ DATABASES = {
         'PORT': '5432',        # Default PostgreSQL port
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'facesphere_db',
+#         'USER': 'facesphere_user',
+#         'PASSWORD': 'BdMM2FT2LqVaEkbSrhI2LFncj9IoUQrO',
+#         'HOST': 'dpg-cof0b0779t8c73c8voog-a',   # Or your PostgreSQL server's IP address
+#         'PORT': '5432',        # Default PostgreSQL port
+#     }
+# }
+
+# Replace the SQLite DATABASES configuration with PostgreSQL:
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Replace this value with your local database's connection string.
+#         default='postgres://facesphere_user:BdMM2FT2LqVaEkbSrhI2LFncj9IoUQrO@dpg-cof0b0779t8c73c8voog-a.oregon-postgres.render.com/facesphere_db',
+#         conn_max_age=600
+#     )
+# }
 
 # Replace it with your DATABASES.
 # DATABASES = {

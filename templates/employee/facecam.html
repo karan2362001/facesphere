@@ -134,7 +134,9 @@
     console.error("Error fetching location:", error);
 });
     // Call the function to get camera stream when the page loads
-    getCameraStream();
+    document.addEventListener('DOMContentLoaded', () => {
+        getCameraStream();
+    });
     // Capture button click event
     captureButton.addEventListener("click", () => {
         const canvas = document.createElement("canvas");

@@ -2,12 +2,17 @@ asgiref==3.8.1
 click==8.1.7
 colorama==0.4.6
 Django==4.2.11
-dlib @ file:///C:/Users/Karan%20Patani/OneDrive/Desktop/sem8/project_env/facesphere/dlib-19.22.99-cp39-cp39-win_amd64.whl
+django-cors-headers==4.3.1
+wheel
+CMake
+dlib
+#dlib @ file:///C:/Users/Karan%20Patani/OneDrive/Desktop/sem8/project_env/facesphere/dlib-19.22.99-cp39-cp39-win_amd64.whl
 face-recognition==1.3.0
 face_recognition_models==0.3.0
 numpy==1.26.4
 opencv-python==4.9.0.80
 pillow==10.3.0
+psycopg2-binary==2.9.9
 sqlparse==0.4.4
 typing_extensions==4.11.0
 tzdata==2024.1
