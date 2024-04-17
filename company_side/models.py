@@ -35,3 +35,30 @@ class Branch(models.Model):
     
     def __str__(self):
         return f"{self.name}_{self.company.name}"
+    
+    
+    
+    
+# class LeaveDeductionRate(models.Model):
+#     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+#     deduction_rates = models.JSONField(default=dict)  # Store deduction rates as JSON
+
+#     def __str__(self):
+#         return f"Leave Deductions for {self.company.name}"
+
+
+
+
+class LeaveDeductionRate(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)  # Assuming each company is represented by a User in your system
+    sick_leave = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    vacation_leave = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    casual_leave = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    earned_leave = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    maternity_leave = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    paternity_leave = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    bereavement_leave = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    compensatory_off = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+   
+    def __str__(self):
+        return f"Leave Deductions for {self.company.name}"

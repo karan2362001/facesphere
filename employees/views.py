@@ -8,7 +8,7 @@ import io
 from PIL import Image
 from accounts.decorators import role_required
 from company_side.models import Company,Company_geo_f_set
-from employees.models import Employee,Attendance,Leave
+from employees.models import LEAVE_CHOICES, Employee,Attendance,Leave
 from accounts.models import CustomUser
 from django.utils import timezone
 from django.contrib import messages
@@ -183,6 +183,7 @@ def apply_leave(request):
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         reason = request.POST.get('reason')
+        leave_type = request.POST.get('leave_type')
         print(start_date,end_date,reason)
         
         # Basic validation
@@ -205,11 +206,11 @@ def apply_leave(request):
         
      
         # Save leave
-        Leave.objects.create(employee=employee, start_date=start_date, end_date=end_date, reason=reason)
+        Leave.objects.create(employee=employee,leave_type=leave_type, start_date=start_date, end_date=end_date, reason=reason)
         messages.success(request, "Leave applied successfully!")
         return redirect('leave_management')
     
-    return render(request, "employee/apply_leave.html", {'employee': employee})
+    return render(request, "employee/apply_leave.html", {'employee': employee,'leave_choices':LEAVE_CHOICES})
 
 
 

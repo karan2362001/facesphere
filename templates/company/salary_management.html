@@ -166,7 +166,7 @@
               Home    
             </a>
           </li>
-          <li class="active mb-4 menu-item p-3 rounded-lg hover:bg-gray-800 bg-gray-800 bg-gray-800 active">
+          <li class="active mb-4 menu-item p-3 rounded-lg hover:bg-gray-800 ">
             <a href="{% url 'manage_employee' %}" class="block flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5v14"/>
@@ -196,13 +196,13 @@
              Employee Report
             </a>
           </li>
-          <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800 ">
+          <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800 bg-gray-800  active">
             <a href="{% url 'salary_management' %}" class="block flex items-center">
               <i class="ri-money-rupee-circle-line ri-lg mr-2"></i>
              Salary Management
             </a>
           </li>
-          
+        
           
           
         </ul>
@@ -228,20 +228,19 @@
               {% endfor %}
           </div>
           {% endif %}
-      
             <!-- Add Employee Button -->
             <div class="flex justify-between mb-4 ">
-              <form  method="GET" class="mb-4">
-                <input type="text" id="searchInput" name="search" placeholder="Search employees..." class="table-header px-3 py-2 border rounded-md">
-                <button type="submit" class="table-header px-4 py-2 bg-blue-500 text-white rounded-md ml-2">Search</button>
-            </form>
-           
-                <a href="{% url 'add_employee' %}">
-                <button
-                    class="table-header bg-blue-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Add Employee
-                </button></a>
-            </div>
+                <form  method="GET" class="mb-4">
+                  <input type="text" id="searchInput" name="search" placeholder="Search employees..." class="table-header px-3 py-2 border rounded-md">
+                  <button type="submit" class="table-header px-4 py-2 bg-blue-500 text-white rounded-md ml-2">Search</button>
+              </form>
+             
+                  <a href="{% url 'leave_deduction_rate' %}">
+                  <button
+                      class="table-header bg-blue-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                      Add Leave Deduction Rate
+                  </button></a>
+              </div>
             <!-- Employee Table -->
             <div class="overflow-x-auto-cols-auto">
             <table class="min-w-full  text-white-500 border border-gray-200">
@@ -263,7 +262,7 @@
                         <td class="px-3 py-3 whitespace-nowrap">{{employee.user.email}}</td>
                         <td class="px-3 py-3 whitespace-nowrap">{{employee.position}}</td>
                         <td class="px-3 py-3 whitespace-nowrap text-sm font-medium">
-                          <a href="{% url 'edit_details_employee' employee.id %}" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                          <a href="{% url 'salary_employee_form' employee.id %}" class="text-indigo-600 hover:text-indigo-900 mr-3">
                               <!-- Edit Icon with Gradient Background -->
                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" viewBox="0 0 20 20" fill="currentColor">
                                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -278,12 +277,7 @@
                               </svg>
                               
                           </a>
-                          <a href="{% url 'delete_details_employee' employee.id %}" class="text-red-600 hover:text-red-900 mr-3" >
-                            <!-- Delete Icon with Gradient Background -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M15.61 5.61l-1.22-1.22a1.5 1.5 0 10-2.12 2.12l1.22 1.22-1.22 1.22a1.5 1.5 0 102.12 2.12l1.22-1.22 1.22 1.22a1.5 1.5 0 102.12-2.12l-1.22-1.22 1.22-1.22a1.5 1.5 0 10-2.12-2.12l-1.22 1.22z" clip-rule="evenodd" />
-                            </svg>
-                        </a>
+                       
                       </td>
                       
                     </tr>

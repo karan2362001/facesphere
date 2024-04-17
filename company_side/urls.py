@@ -13,5 +13,13 @@ urlpatterns = [
      path("manage-employee-leave/",views.manage_employee_leave,name='manage_employee_leave'),
      path("manage-employee-leave-approve/<int:leave_id>",views.manage_employee_leave_approve,name='manage_employee_leave_approve'),
      path("manage-employee-leave-reject/<int:leave_id>",views.manage_employee_leave_reject,name='manage_employee_leave_reject'),
+     path("employee-report/",views.employee_report,name='employee_report'),
+      path("report-employee/<int:employee_id>",views.report_employee,name='report_employee'),
+     path('download-attendance-report1/<int:selected_year>/<int:selected_month>/<int:employee_id>', views.download_attendance_report1, name='download_attendance_report1'),
+     path("salary-employee-form/<int:employee_id>",views.salary_employee_form,name='salary_employee_form'),
+    path("salary-management/",views.salary_management,name='salary_management'),
+    path("leave-deduction-rate/",views.leave_deduction_rate,name='leave_deduction_rate'),
+    
+  
      
 ]

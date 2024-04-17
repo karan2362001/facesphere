@@ -8,7 +8,8 @@ from accounts.decorators import role_required
 from .forms import LoginForm
 from accounts.models import CustomUser
 from company_side.models import Company
-from employees.models import Employee,Attendance,Leave 
+from employees.models import Employee,Attendance,Leave
+from django.db.models import Count, Q 
 
 
 def user_logout(request):
@@ -77,10 +78,17 @@ def Company_view(request):
     
     # Count the total number of present employees
     total_present = present_employees.count()
-    leaves_today = Leave.objects.filter(start_date__lte=today, end_date__gte=today,status='1')
+    leaves_today = Leave.objects.filter(employee__company=company,start_date__lte=today, end_date__gte=today,status='1')
     
     # Count unique employees on leave today
     employees_on_leave_today = leaves_today.values_list('employee', flat=True).distinct().count()
+    search_query = request.GET.get('search')
+    if search_query:
+        present_employees = present_employees.filter(
+            Q(employee__user__first_name__icontains=search_query) | 
+            Q(employee__user__last_name__icontains=search_query) 
+            #Q(user__email__icontains=search_query)
+        )
  
     
     return render(request, "company/index.html", {'present_employees': present_employees, 'total_present': total_present, 'total_employees': total_employees,'employees_on_leave_today':employees_on_leave_today})

@@ -163,49 +163,49 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 18v-6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v6l-9 5-9-5zm2-6V6h14v6"/>
               </svg>
               
-              Home    
+              Home
             </a>
           </li>
-          <li class="active mb-4 menu-item p-3 rounded-lg hover:bg-gray-800 bg-gray-800 bg-gray-800 active">
-            <a href="{% url 'manage_employee' %}" class="block flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5v14"/>
-              </svg>
-              Manage Employee
-            </a>
-          </li>
-          <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
-            <a href="{% url 'set_geofencing' %}" class="block flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 9h10M7 15h10M12 3v3M12 18v-3"/>
-              </svg>
-              Set Geofencing
-            </a>
-          </li>
-          <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
-            <a href="{% url 'manage_employee_leave' %}" class="block flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4 0a7 7 0 1 1-14 0 7 7 0 0 1 14 0zm-7 7a4 4 0 0 1-4-4"/>
-              </svg>
-             Manage Leaves
-            </a>
-          </li>
-          <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
-            <a href="{% url 'employee_report' %}" class="block flex items-center">
-              <i class="ri-git-repository-line ri-lg mr-2"></i>
-             Employee Report
-            </a>
-          </li>
-          <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800 ">
-            <a href="{% url 'salary_management' %}" class="block flex items-center">
-              <i class="ri-money-rupee-circle-line ri-lg mr-2"></i>
-             Salary Management
-            </a>
-          </li>
-          
-          
-          
-        </ul>
+            <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800 ">
+              <a href="{% url 'manage_employee' %}" class="block flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5v14"/>
+                </svg>
+                Manage Employee
+              </a>
+            </li>
+            <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
+              <a href="{% url 'set_geofencing' %}" class="block flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 9h10M7 15h10M12 3v3M12 18v-3"/>
+                </svg>
+                Set Geofencing
+              </a>
+            </li>
+            <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800">
+              <a href="{% url 'manage_employee_leave' %}" class="block flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4 0a7 7 0 1 1-14 0 7 7 0 0 1 14 0zm-7 7a4 4 0 0 1-4-4"/>
+                </svg>
+               Manage Leaves
+              </a>
+            </li>
+            <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800 bg-gray-800 active">
+              <a href="{% url 'employee_report' %}" class="block flex items-center">
+                <i class="ri-git-repository-line ri-lg mr-2"></i>
+               Employee Report
+              </a>
+            </li>
+            <li class="mb-4 menu-item p-3 rounded-lg hover:bg-gray-800 ">
+              <a href="{% url 'salary_management' %}" class="block flex items-center">
+                <i class="ri-money-rupee-circle-line ri-lg mr-2"></i>
+               Salary Management
+              </a>
+            </li>
+            
+            
+            
+          </ul>
         <div class="absolute bottom-8 left-8">
           <a href="{% url 'user_logout' %}" class="flex items-center mb-4 menu-item p-3 px-12 rounded-lg hover:bg-gray-800 table-header text-white">
             <i class="ri-expand-left-line ri-xl mr-2"></i>
@@ -228,23 +228,18 @@
               {% endfor %}
           </div>
           {% endif %}
-      
             <!-- Add Employee Button -->
-            <div class="flex justify-between mb-4 ">
-              <form  method="GET" class="mb-4">
-                <input type="text" id="searchInput" name="search" placeholder="Search employees..." class="table-header px-3 py-2 border rounded-md">
-                <button type="submit" class="table-header px-4 py-2 bg-blue-500 text-white rounded-md ml-2">Search</button>
-            </form>
-           
-                <a href="{% url 'add_employee' %}">
-                <button
-                    class="table-header bg-blue-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Add Employee
-                </button></a>
+            <div class="mb-4">
+                <form action="{% url 'employee_report' %}" method="GET" class="mb-4">
+                    <input type="text" id="searchInput" name="search" placeholder="Search employees..." class="table-header px-3 py-2 border rounded-md">
+                    <button type="submit" class="table-header px-4 py-2 bg-blue-500 text-white rounded-md ml-2">Search</button>
+                </form>
             </div>
             <!-- Employee Table -->
             <div class="overflow-x-auto-cols-auto">
+                {% if employees %}
             <table class="min-w-full  text-white-500 border border-gray-200">
+               
                 <thead  class="table-header text-white-500 " >
                     <tr>
                         <th class="px-3 py-3 text-left text-xs font-medium text-white-500 uppercase tracking-wider">ID</th>
@@ -263,27 +258,15 @@
                         <td class="px-3 py-3 whitespace-nowrap">{{employee.user.email}}</td>
                         <td class="px-3 py-3 whitespace-nowrap">{{employee.position}}</td>
                         <td class="px-3 py-3 whitespace-nowrap text-sm font-medium">
-                          <a href="{% url 'edit_details_employee' employee.id %}" class="text-indigo-600 hover:text-indigo-900 mr-3">
-                              <!-- Edit Icon with Gradient Background -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                  <path fill-rule="evenodd" d="M15.03 4.97a3 3 0 00-4.24 0l-7 7a3 3 0 00-.7 1.22L2 17l4.76-1.37a3 3 0 001.22-.71l7-7a3 3 0 000-4.24zm-1.41 2.83a1 1 0 010 1.41L8.17 15H7v-1.17l7.12-7.12a1 1 0 011.41 0l1.41 1.41a1 1 0 010 1.41l-7.12 7.12a1 1 0 01-1.41 0L4.5 10.34l1.41-1.41 1.06 1.06a3 3 0 004.24 0l1.42-1.42z" clip-rule="evenodd" />
-                              </svg>
-                              
-                          </a>
-                          <a href="{% url 'show_details_employee' employee.id %}" class="text-green-600 hover:text-green-900 mr-3">
+                     
+                          <a href="{% url 'report_employee' employee.id %}" class="text-green-600 hover:text-green-900 mr-3">
                               <!-- View Icon with Gradient Background -->
                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" viewBox="0 0 20 20" fill="currentColor">
                                   <path fill-rule="evenodd" d="M2 10c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8-8-3.59-8-8zm10 6a6 6 0 100-12 6 6 0 000 12zM11 8a1 1 0 112 0v2a1 1 0 11-2 0V8zm0 4a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
-                              </svg>
+                              </svg> view
                               
                           </a>
-                          <a href="{% url 'delete_details_employee' employee.id %}" class="text-red-600 hover:text-red-900 mr-3" >
-                            <!-- Delete Icon with Gradient Background -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M15.61 5.61l-1.22-1.22a1.5 1.5 0 10-2.12 2.12l1.22 1.22-1.22 1.22a1.5 1.5 0 102.12 2.12l1.22-1.22 1.22 1.22a1.5 1.5 0 102.12-2.12l-1.22-1.22 1.22-1.22a1.5 1.5 0 10-2.12-2.12l-1.22 1.22z" clip-rule="evenodd" />
-                            </svg>
-                        </a>
+                       
                       </td>
                       
                     </tr>
@@ -292,6 +275,9 @@
                     <!-- Replace this section with dynamic data using server-side rendering or JavaScript -->
                 </tbody>
             </table>
+            {% else %}
+            <p class="text-center text-gray-500 mt-8">No employees found.</p>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -341,6 +327,9 @@
         }
       }
   
+      const searchInput = document.getElementById('searchInput');
+
+ 
     </script>
   </body>
 </html>

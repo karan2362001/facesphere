@@ -275,6 +275,15 @@ body {
                 <label for="end_date">End Date:</label>
                 <input type="date" id="end_date" name="end_date" required>
             </div>
+            <div class="form-field">
+              <label for="leave_type">Leave Type:</label>
+              <select id="leave_type" name="leave_type" required>
+                  <option value="" disabled selected>Select Leave Type</option>
+                  {% for choice in leave_choices %}
+                      <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                  {% endfor %}
+              </select>
+          </div>
            
             <div class="form-field">
                 <label for="position">reason:</label>

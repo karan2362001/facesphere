@@ -197,6 +197,14 @@
       <div class="ellipse-2"></div>
       <div class="ellipse-5"></div>
       <div class="md:ml-72  bg-gray-100    overflow-y-auto flex-1 p-8 lg:p-20 glass">
+            <!-- Popup for Reason -->
+<div id="reasonPopup" class="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+  <div Style=" background: linear-gradient(to bottom, #102c57, #102c57);" class="text-white p-8 rounded-md shadow-md">
+      <h2 class="text-lg font-semibold mb-4">📑: Reason for Leave</h2>
+      <p id="reasonContent" class="text-sm "> </p>
+      <button onclick="closeReasonPopup()" class="text-black hover:bg-gray-800 bg-gray-600 px-3 py-1 rounded-md focus:outline-none mt-4">Close</button>
+  </div>
+</div>
         <!-- Employee Details -->
         <div class="container mx-auto py-8">
           {% if messages %}
@@ -222,6 +230,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-white-500 uppercase tracking-wider">reason</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-white-500 uppercase tracking-wider">Start Date</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-white-500 uppercase tracking-wider">End Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-white-500 uppercase tracking-wider">Leave Type</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-white-500 uppercase tracking-wider">Status</th>
                     </tr>
                 </thead>
@@ -230,8 +239,9 @@
                     <!-- Employee Data -->
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap"><button onclick="showReason('{{ leave.reason }}')" class="text-white hover:bg-gray-800 table-header  px-3 py-1 rounded-md focus:outline-none">View Reason</button></td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{leave.start_date}} {{employee.user.last_name}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{leave.start_date}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{leave.end_date}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{leave.leave_type}}</td>
                         {% if leave.status == '3' %}
                     <td class="text-orange-500 font-bold px-6 py-4 whitespace-nowrap">Pending</td>
                 {% elif leave.status == '1' %}
@@ -265,14 +275,7 @@
         </svg>
       </button>
     </div>
-    <!-- Popup for Reason -->
-<div id="reasonPopup" class="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
-  <div Style=" background: linear-gradient(to bottom, #102c57, #102c57);" class="text-white p-8 rounded-md shadow-md">
-      <h2 class="text-lg font-semibold mb-4">📑: Reason for Leave</h2>
-      <p id="reasonContent" class="text-sm "> </p>
-      <button onclick="closeReasonPopup()" class="text-black hover:bg-gray-800 bg-gray-600 px-3 py-1 rounded-md focus:outline-none mt-4">Close</button>
-  </div>
-</div>
+
     
     <script>
       // JavaScript to handle sidebar toggle
