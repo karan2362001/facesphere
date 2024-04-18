@@ -334,12 +334,23 @@
           <input type="number" id="bonus" name="bonus" required value="{{ salary_employee.bonus }}">
       </div>
       <!-- Add fields for tax type and tax amount -->
+      {% if existing_tax_data %}
       {% for tax_type, tax_amount in existing_tax_data.items  %}
       <div class="form-field">
           <label for="{{ tax_type }}">{{ tax_type }}:</label>
           <input type="number" id="{{ tax_type }}" name="{{ tax_type }}" class="tax-amount" required  value="{{ tax_amount }}">
       </div>
       {% endfor %}
+      {% else %}
+        <!-- Input fields for the user to enter new tax data -->
+        {% for tax_choice in tax_choices  %}
+      <div class="form-field">
+          <label for="{{ tax_choice.0 }}">{{ tax_choice.0 }}:</label>
+          <input type="number" id="{{ tax_choice.0 }}" name="{{ tax_choice.0 }}" class="tax-amount" required >
+      </div>
+      {% endfor %}
+        <!-- Add similar fields for other tax types -->
+    {% endif %}
     
   <!-- Submit button -->
   <button type="submit" id='submitBtn' class="submit-btn col-span-2">Submit</button>

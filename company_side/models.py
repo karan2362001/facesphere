@@ -38,13 +38,6 @@ class Branch(models.Model):
     
     
     
-    
-# class LeaveDeductionRate(models.Model):
-#     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-#     deduction_rates = models.JSONField(default=dict)  # Store deduction rates as JSON
-
-#     def __str__(self):
-#         return f"Leave Deductions for {self.company.name}"
 
 
 
