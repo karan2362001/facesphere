@@ -26,7 +26,7 @@ def face_enc(image_data):
         # Load image data
         #image = face_recognition.load_image_file(image_data)
         image_data = io.BytesIO(base64.b64decode(image_data.split(',')[1]))
-        
+        print(image_data)
         # Open image using PIL (Python Imaging Library)
         pil_image = Image.open(image_data)
         
@@ -62,7 +62,7 @@ def attendance_cam(request):
             # geofence_center = (23.045351984509566, 72.67995464145855) 
             #employee_location = (float(lat),float(lon))
             # result = is_inside_geofence(employee_location, geofence_center, radius=100) 
-            print(latitude,longitude)
+            print(latitude,longitude,image_data_base64)
             face_encodings = face_enc(image_data_base64)
             if face_encodings is not None:
                 

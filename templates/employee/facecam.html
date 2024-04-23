@@ -34,29 +34,7 @@
             align-items: center;
             justify-content: center;
             margin: 20px 0;
-            
         }
-
-        .popup-container {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            z-index: 1000;
-        }
-
-        .employee-details {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
     </style>
 </head>
 <body class="bg-cover bg-center min-h-screen flex flex-row" style="background: linear-gradient(to right, #102c57, #102c57, #102c57);">
@@ -82,9 +60,11 @@
                 <form id="imageForm" method="POST">
                     {% csrf_token %}
                     <input type="hidden" id="imageData" name="image_data">
+                    <input type="hidden" name="latitude" id="latitude">
+                    <input type="hidden" name="longitude" id="longitude">
                 </form>
                 <div class="flex flex-col md:flex-row justify-center mt-4 space-x-4 space-y-4">
-                    <button id="captureButton" class="hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg">
+                    <button type="submit" id="captureButton" class="hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg">
                         📸 Capture Photo
                     </button>
                     <button id="recaptureButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg" style="display: none;">
@@ -98,17 +78,14 @@
         </div>
     </div>
 
-   
-
-    
 <script>
     const video = document.getElementById("videoElement");
     const captureButton = document.getElementById("captureButton");
     const recaptureButton = document.getElementById("recaptureButton");
-
+    const submitDataButton = document.getElementById("submitDataButton");
     const capturedImage = document.getElementById("capturedImage");
 
-    // Get user media
+    // Function to get camera stream
     async function getCameraStream() {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -117,26 +94,25 @@
             console.error("Error accessing webcam:", err);
         }
     }
- // Fetch and send location data
- navigator.geolocation.getCurrentPosition(position => {
-    const latitude = position.coords.latitude  ;
-    const longitude = position.coords.longitude;
-    
-    // Append latitude and longitude to the form data
-    document.getElementById("imageForm").innerHTML += `
-        <input type="hidden" name="latitude" id="latitude" value="${latitude}">
-        <input type="hidden" name="longitude" id="longitude" value="${longitude}">
-    `;
 
-    // Submit the form
+    // Fetch and send location data
+    navigator.geolocation.getCurrentPosition(position => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        
+        // Append latitude and longitude to the form data
+        document.getElementById("latitude").value = latitude;
+        document.getElementById("longitude").value = longitude;
 
-}, error => {
-    console.error("Error fetching location:", error);
-});
+    }, error => {
+        console.error("Error fetching location:", error);
+    });
+
     // Call the function to get camera stream when the page loads
     document.addEventListener('DOMContentLoaded', () => {
         getCameraStream();
     });
+
     // Capture button click event
     captureButton.addEventListener("click", () => {
         const canvas = document.createElement("canvas");
@@ -156,11 +132,8 @@
         video.style.display = "none";
         captureButton.style.display = "none";
         recaptureButton.style.display = "inline-block";
-        submitDataButton.style.display = "none";
-
+        submitDataButton.style.display = "inline-block";
         document.getElementById("imageForm").submit();
-
-       
     });
 
     // Recapture button click event
@@ -183,31 +156,8 @@
     // Submit data button click event
     submitDataButton.addEventListener("click", () => {
         // Submit the form
-    });
-
-    // Display face name function
-    function displayFaceName(faceName) {
-        // Show face name section
-        document.getElementById("faceNameSection").style.display = "block";
         
-        // Set face name text
-        document.getElementById("faceName").innerText = "Detected Face: " + faceName;
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-        const openPopupButton = document.getElementById('openPopupButton');
-        const closePopupButton = document.getElementById('closePopupButton');
-        const employeeDetailsPopup = document.getElementById('employeeDetailsPopup');
-    
-        openPopupButton.addEventListener('click', function() {
-            employeeDetailsPopup.style.display = 'block';
-        });
-    
-        closePopupButton.addEventListener('click', function() {
-            employeeDetailsPopup.style.display = 'none';
-        });
     });
-    
 </script>
-
 </body>
 </html>
